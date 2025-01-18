@@ -1,5 +1,35 @@
 %% Lab1 
 
+% Data for Vin and RPM
+vin = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -1, -2, -3, -4, -5, -6, -7, -8, -9, -10, 0.31, -0.19];
+rpm = [150, 351, 555, 759, 965, 1160, 1358, 1563, 1764, 1965, ...
+      -163, -365, -565, -766, -970, -1160, -1362, -1565, -1766, -1966, 0, 0];
+
+% Sort data by Vin
+[vin_sorted, sort_idx] = sort(vin);
+rpm_sorted = rpm(sort_idx);
+
+% Identify death zone (RPM = 0)
+death_zone_idx = rpm_sorted == 0;
+vin_death_zone = vin_sorted(death_zone_idx);
+rpm_death_zone = rpm_sorted(death_zone_idx);
+
+% Plot data
+figure;
+plot(vin_sorted, rpm_sorted, 'b-o', 'LineWidth', 1.5, 'MarkerFaceColor', 'blue'); % Blue line with markers
+hold on;
+plot(vin_death_zone, rpm_death_zone, 'ro', 'MarkerSize', 8, 'MarkerFaceColor', 'red'); % Highlight death zone
+hold off;
+
+% Add labels and title
+xlabel('Input Voltage (V)');
+ylabel('Motor velocity (RPM)');
+title('Motor Characteristics: Motor velocity with respect to input voltage');
+grid on;
+
+% Add legend
+legend('Motor Data', 'Death Zone (RPM = 0)', 'Location', 'NorthWest');
+
 %% Lab 2
 
 % Data
