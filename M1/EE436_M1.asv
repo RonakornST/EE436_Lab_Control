@@ -28,7 +28,6 @@ grid on;
 
 
 %% Lab 3-1
-
 % Define file name
 filename = 'data_motor_step_noclutch.txt';
 
@@ -71,11 +70,12 @@ ylabel('Gen Data');
 title('Gen Data with respect to Time');
 grid on;
 
+% Adjust the layout for better visualization
 sgtitle('Lab3-1: Plots of Position, Speed, and Generator Data with respect to Time'); % Add a super title
-%% Lab 3-2
 
+%% Lab 3-2
 % Define file name
-filename = 'data_motor_step_clutch.txt';
+filename = 'data_motor_sine_load.txt';
 
 % Read the data, skipping 4 header lines
 data2 = readtable(filename, 'FileType', 'text', 'HeaderLines', 4);
@@ -84,51 +84,8 @@ data2 = readtable(filename, 'FileType', 'text', 'HeaderLines', 4);
 t = data2.Time;       % Time data
 p = data2.position;   % Position data
 rpm = data2.speed;    % Speed data
-gen = data2.Func_;    % Generator data but Matlab read Func_ and Gen_ as 2 different column so the data shift by 1 column
-
-% Create a figure for the plots
-figure;
-
-% Plot position vs time
-subplot(3, 1, 1); % Create a subplot with 3 rows, 1 column, position 1
-plot(t, p, 'b', 'LineWidth', 1.5); % Blue line with line width 1.5
-xlabel('Time (s)');
-ylabel('Position');
-title('Position with respect to Time');
-grid on;
-
-% Plot speed (RPM) vs time
-subplot(3, 1, 2); % Subplot position 2
-plot(t, rpm, 'r', 'LineWidth', 1.5); % Red line
-xlabel('Time (s)');
-ylabel('Speed (RPM)');
-title('Speed with respect to Time');
-grid on;
-
-% Plot generator data vs time
-subplot(3, 1, 3); % Subplot position 3
-plot(t, gen, 'g', 'LineWidth', 1.5); % Green line
-xlabel('Time (s)');
-ylabel('Generator Data');
-title('Generator Data with respect to Time');
-grid on;
-
-sgtitle('Lab 3-2: Plots of Position, Speed, and Generator Data with respect to Time'); % Add a super title
-
-
-%% Lab 3-3
-% Define file name
-filename = 'data_motor_sine_load.txt';
-
-% Read the data, skipping 4 header lines
-data3 = readtable(filename, 'FileType', 'text', 'HeaderLines', 4);
-
-% Extract variables from the table
-t = data3.Time;       % Time data
-p = data3.position;   % Position data
-rpm = data3.speed;    % Speed data
-gen = data3.Func_;    % Generator data
-load = data3.Gen_;    % Load data but Matlab read Func_ and Gen_ as 2 different column so the data shift by 1 column
+gen = data2.Func_;    % Generator data
+load = data2.Gen_;    % Load data but Matlab read Func_ and Gen_ as 2 different column so the data shift by 1 column
 
 % Create a figure for the plots
 figure;
@@ -165,6 +122,93 @@ ylabel('Load');
 title('Load with respect to Time');
 grid on;
 
-sgtitle('Lab 3-3: Plots of Position, Speed, Generator Data, and Load with respect to Time'); % Add a super title
+% Adjust the layout for better visualization
+sgtitle('Lab 3-2: Plots of Position, Speed, Generator Data, and Load with respect to Time'); % Add a super title
 
 
+%% lab 3-2
+% use data_motor_sine_load
+
+% Assuming the variables are loaded from m2
+t = m2.time;       % Time data
+p = m2.position;   % Position data
+rpm = m2.speed;    % Speed data
+gen = m2.gen;      % Generator data
+load = m2.load;    % Load data
+
+% Create a figure for the plots
+figure;
+
+% Plot position vs time
+subplot(4, 1, 1); % Create a subplot with 4 rows, 1 column, position 1
+plot(t, p, 'b', 'LineWidth', 1.5); % Blue line with line width 1.5
+xlabel('Time (s)');
+ylabel('Position');
+title('Position vs Time');
+grid on;
+
+% Plot speed (RPM) vs time
+subplot(4, 1, 2); % Subplot position 2
+plot(t, rpm, 'r', 'LineWidth', 1.5); % Red line
+xlabel('Time (s)');
+ylabel('Speed (RPM)');
+title('Speed vs Time');
+grid on;
+
+% Plot generator data vs time
+subplot(4, 1, 3); % Subplot position 3
+plot(t, gen, 'g', 'LineWidth', 1.5); % Green line
+xlabel('Time (s)');
+ylabel('Gen Data');
+title('Gen Data vs Time');
+grid on;
+
+% Plot load data vs time
+subplot(4, 1, 4); % Subplot position 4
+plot(t, load, 'm', 'LineWidth', 1.5); % Magenta line
+xlabel('Time (s)');
+ylabel('Load');
+title('Load vs Time');
+grid on;
+
+% Adjust the layout for better visualization
+sgtitle('Lab3-2: Plots of Position, Speed, Generator Data, and Load vs Time'); % Add a super title
+
+
+%% lab 3-3
+
+% Assuming the variables are loaded from m3
+t = m3.time;       % Time data
+p = m3.position;   % Position data
+rpm = m3.speed;    % Speed data
+gen = m3.gen;      % Generator data
+
+% Create a figure for the plots
+figure;
+
+% Plot position vs time
+subplot(3, 1, 1); % Create a subplot with 3 rows, 1 column, position 1
+plot(t, p, 'b', 'LineWidth', 1.5); % Blue line with line width 1.5
+xlabel('Time (s)');
+ylabel('Position');
+title('Position vs Time');
+grid on;
+
+% Plot speed (RPM) vs time
+subplot(3, 1, 2); % Subplot position 2
+plot(t, rpm, 'r', 'LineWidth', 1.5); % Red line
+xlabel('Time (s)');
+ylabel('Speed (RPM)');
+title('Speed vs Time');
+grid on;
+
+% Plot generator data vs time
+subplot(3, 1, 3); % Subplot position 3
+plot(t, gen, 'g', 'LineWidth', 1.5); % Green line
+xlabel('Time (s)');
+ylabel('Gen Data');
+title('Gen Data vs Time');
+grid on;
+
+% Adjust the layout for better visualization
+sgtitle('Lab3-3: Plots of Position, Speed, and Generator Data vs Time'); % Add a super title
