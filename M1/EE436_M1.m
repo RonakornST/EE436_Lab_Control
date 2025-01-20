@@ -1,4 +1,4 @@
-%% Lab1 
+%% Lab1 plot (not fit graph)
 
 % Data for Vin and RPM
 vin = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -1, -2, -3, -4, -5, -6, -7, -8, -9, -10, 0.31, -0.19];
@@ -29,6 +29,59 @@ grid on;
 
 % Add legend
 legend('Motor Data', 'Death Zone (RPM = 0)', 'Location', 'NorthWest');
+
+%% Lab1 plot with death zone points included in fits
+
+% Data for Vin and RPM
+vin = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -1, -2, -3, -4, -5, -6, -7, -8, -9, -10, 0.31, -0.19];
+rpm = [150, 351, 555, 759, 965, 1160, 1358, 1563, 1764, 1965, ...
+      -163, -365, -565, -766, -970, -1160, -1362, -1565, -1766, -1966, 0, 0];
+
+% Sort data by Vin
+[vin_sorted, sort_idx] = sort(vin);
+rpm_sorted = rpm(sort_idx);
+
+% Separate data for positive and negative V_in
+vin_positive = vin_sorted(vin_sorted >= 0); % Include right death zone
+rpm_positive = rpm_sorted(vin_sorted >= 0);
+
+vin_negative = vin_sorted(vin_sorted <= 0); % Include left death zone
+rpm_negative = rpm_sorted(vin_sorted <= 0);
+
+% Fit polynomials for positive and negative V_in
+p_positive = polyfit(vin_positive, rpm_positive, 1); % Linear fit
+p_negative = polyfit(vin_negative, rpm_negative, 1); % Linear fit
+
+% Generate fitted data
+vin_fit_positive = linspace(min(vin_positive), max(vin_positive), 100);
+rpm_fit_positive = polyval(p_positive, vin_fit_positive);
+
+vin_fit_negative = linspace(min(vin_negative), max(vin_negative), 100);
+rpm_fit_negative = polyval(p_negative, vin_fit_negative);
+
+% Plot data
+figure;
+plot(vin_sorted, rpm_sorted, 'b-o', 'LineWidth', 1.5, 'MarkerFaceColor', 'blue'); % Original data
+hold on;
+plot(vin_fit_positive, rpm_fit_positive, 'g--', 'LineWidth', 2); % Fitted curve for positive V_in
+plot(vin_fit_negative, rpm_fit_negative, 'm--', 'LineWidth', 2); % Fitted curve for negative V_in
+plot(vin_sorted(rpm_sorted == 0), rpm_sorted(rpm_sorted == 0), 'ro', 'MarkerSize', 8, 'MarkerFaceColor', 'red'); % Death zone
+hold off;
+
+% Add labels and title
+xlabel('Input Voltage (V)');
+ylabel('Motor velocity (RPM)');
+title('Motor Characteristics: Including death zone points in fits');
+grid on;
+
+% Prepare equations for the legend
+equation_positive = sprintf('Fit (V_{in} >= 0): RPM = %.2f*V_{in} + %.2f', ...
+    p_positive(1), p_positive(2));
+equation_negative = sprintf('Fit (V_{in} <= 0): RPM = %.2f*V_{in} + %.2f', ...
+    p_negative(1), p_negative(2));
+
+% Add legend
+legend('Motor Data', equation_positive, equation_negative, 'Death Zone (RPM = 0)', 'Location', 'NorthWest');
 
 %% Lab 2
 
@@ -198,3 +251,47 @@ grid on;
 sgtitle('Lab 3-3: Plots of Position, Speed, Generator Data, and Load with respect to Time'); % Add a super title
 
 
+%%
+
+% Data
+vin = [1 2 3 4 5 6 7 8 9 10 -1 -2 -3 -4 -5 -6 -7 -8 -9 -10 0.31 -0.19];
+rpm1 = [150 351 555 759 965 1160 1358 1563 1764 1965 -163 -365 -565 -766 -970 -1160 -1362 -1565 -1766 -1966 0 0];
+
+% Identify linear region for fitting
+linear_region = vin(1:5); % Low Vin values
+linear_rpm = rpm1(1:5);
+
+% Fit a linear trend to the linear region
+coeffs = polyfit(linear_region, linear_rpm, 1); % Linear fit coefficients
+linear_fit = polyval(coeffs, vin); % Extend the linear fit to all Vin
+
+% Plot saturation
+figure;
+hold on;
+plot(vin, rpm1, 'b', 'LineWidth', 1.5); % Original data
+plot(vin, linear_fit, 'g--', 'LineWidth', 1.5); % Linear fit line
+xlabel('Input Voltage (Vin)');
+ylabel('RPM');
+title('Saturation Property: Vin vs RPM');
+legend('Actual Data', 'Linear Trend', 'Location', 'Best');
+grid on;
+hold off;
+%%
+% Separate data into increasing and decreasing cycles
+vin_positive = vin(vin > 0);
+rpm_positive = rpm1(vin > 0);
+
+vin_negative = vin(vin < 0);
+rpm_negative = rpm1(vin < 0);
+
+% Plot hysteresis
+figure;
+hold on;
+plot(vin_positive, rpm_positive, 'b', 'LineWidth', 1.5); % Increasing Vin
+plot(vin_negative, rpm_negative, 'r', 'LineWidth', 1.5); % Decreasing Vin
+xlabel('Input Voltage (Vin)');
+ylabel('RPM');
+title('Hysteresis Property: Vin vs RPM');
+legend('Increasing Vin', 'Decreasing Vin', 'Location', 'Best');
+grid on;
+hold off;
