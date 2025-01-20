@@ -150,12 +150,12 @@ grid on;
 subplot(3, 1, 3); % Subplot position 3
 plot(t, gen, 'g', 'LineWidth', 1.5); % Green line
 xlabel('Time (s)');
-ylabel('Gen Data');
-title('Gen Data with respect to Time');
+ylabel('Motor input voltage');
+title('Motor input voltage with respect to Time');
 grid on;
 
 sgtitle('Lab3-1: Plots of Position, Speed, and Generator Data with respect to Time'); % Add a super title
-%% Lab 3-2
+%% Lab 3-3
 
 % Define file name
 filename = 'data_motor_step_clutch.txt';
@@ -192,14 +192,14 @@ grid on;
 subplot(3, 1, 3); % Subplot position 3
 plot(t, gen, 'g', 'LineWidth', 1.5); % Green line
 xlabel('Time (s)');
-ylabel('Generator Data');
-title('Generator Data with respect to Time');
+ylabel('Motor input voltage');
+title('Motor input voltage with respect to Time');
 grid on;
 
-sgtitle('Lab 3-2: Plots of Position, Speed, and Generator Data with respect to Time'); % Add a super title
+sgtitle('Lab 3-3: Plots of Position, Speed, and Motor input voltage with respect to Time'); % Add a super title
 
 
-%% Lab 3-3
+%% Lab 3-2
 % Define file name
 filename = 'data_motor_sine_load.txt';
 
@@ -236,19 +236,19 @@ grid on;
 subplot(4, 1, 3); % Subplot position 3
 plot(t, gen, 'g', 'LineWidth', 1.5); % Green line
 xlabel('Time (s)');
-ylabel('Generator Data');
-title('Generator Data with respect to Time');
+ylabel('Motor input voltage');
+title('Motor input voltage with respect to Time');
 grid on;
 
 % Plot load data vs time
 subplot(4, 1, 4); % Subplot position 4
 plot(t, load, 'm', 'LineWidth', 1.5); % Magenta line
 xlabel('Time (s)');
-ylabel('Load');
+ylabel('Load (V)');
 title('Load with respect to Time');
 grid on;
 
-sgtitle('Lab 3-3: Plots of Position, Speed, Generator Data, and Load with respect to Time'); % Add a super title
+sgtitle('Lab 3-2: Plots of Position, Speed, Motor input voltage, and Load with respect to Time'); % Add a super title
 
 
 %%
